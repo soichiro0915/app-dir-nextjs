@@ -4,13 +4,13 @@ import { format } from 'date-fns'
 type Note = Database['public']['Tables']['notes']['Row']
 
 async function fetchNotes() {
-  // await new Promise((resolve) => setTimeout(resolve, 2000)) // 不要
+  await new Promise((resolve) => setTimeout(resolve, 2000)) // 不要
   const res = await fetch(`${process.env.url}/rest/v1/notes?select=*`, {
     headers: new Headers({
       apikey: process.env.apikey as string,
     }),
-    // cache: 'no-store', //SSG 表記なし or 'force-cache'  SSR 'no-cache'
-    next: { revalidate: 10 }, //ISR
+    cache: 'no-store', //SSG 表記なし or 'force-cache'  SSR 'no-cache'
+    // next: { revalidate: 10 }, //ISR
   })
   if (!res.ok) {
     throw new Error('Failed to fetch data in server')
